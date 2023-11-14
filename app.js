@@ -30,46 +30,46 @@ function clicSurCase(e){
     if(partieEncours[caseIndex] !== "" || !verouillage){
         return;
     }
-
     partieEncours[caseIndex] = joueurEnCours;
     caseClique.innerHTML = joueurEnCours;
 
     console.log(partieEncours);
 
+    validationResultats();
 
-    function validationResultats(){
-        let finDePartie = false;
-        for (let i = 0; i < alignementsGagnants.length; i++) {
-            const checkWin = alignementsGagnants[i];
+}
 
-            let a = partieEncours[checkWin[0]]; 
-            let b = partieEncours[checkWin[1]];
-            let c = partieEncours[checkWin[2]];
+function validationResultats(){
+    let finDePartie = false;
+    for (let i = 0; i < alignementsGagnants.length; i++) {
+        const checkWin = alignementsGagnants[i];
 
-            if (a === '' || b === '' || c === '') {
-                continue;
-            }
-            if (a === b && b === c){
-                finDePartie = true;
-                break
-            }
+        let a = partieEncours[checkWin[0]]; 
+        let b = partieEncours[checkWin[1]];
+        let c = partieEncours[checkWin[2]];
+
+        if (a === '' || b === '' || c === '') {
+            continue;
         }
-        if (finDePartie) {
-            info.innerText = `Le joueur ${joueurEnCours} a gagné !`;
-            verouillage = false;
-            return;
-        }
-
-        let matchNul = !partieEncours.includes('');
-        if (matchNul) {
-            info.innerText = 'Match nul !';
-            verouillage = false;
-            return;
+        if (a === b && b === c){
+            finDePartie = true;
+            break;
         }
     }
-
+    if (finDePartie) {
+        info.innerText = `Le joueur ${joueurEnCours} a gagné !`;
+        verouillage = false;
+        return;
+    }
+    let matchNul = !partieEncours.includes('');
+    if (matchNul) {
+        info.innerText = 'Match nul !';
+        verouillage = false;
+        return; 
+    }
     changementDeJoueur();
 }
+
 
 function changementDeJoueur(){
     joueurEnCours = joueurEnCours === "X" ? "O" : "X";
